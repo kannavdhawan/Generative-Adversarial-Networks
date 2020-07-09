@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns 
+import tensorflow as tf
 
 def create_y(x):
 
@@ -35,3 +36,11 @@ data_set_df=pd.DataFrame(data_set)
 # plt.plot(data_set_df[0],data_set_df[1],'o',linewidth=2, markersize=2)
 sns.scatterplot(data_set_df[0],data_set_df[1])
 plt.savefig('display.png') 
+
+def generator(Z,hsize=[16, 16],reuse=False):
+    with tf.variable_scope("GAN/Generator",reuse=reuse):
+        h1 = tf.layers.dense(Z,hsize[0],activation=tf.nn.leaky_relu)
+        h2 = tf.layers.dense(h1,hsize[1],activation=tf.nn.leaky_relu)
+        out = tf.layers.dense(h2,2)
+
+    return out
