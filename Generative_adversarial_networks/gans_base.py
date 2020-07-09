@@ -37,10 +37,45 @@ data_set_df=pd.DataFrame(data_set)
 sns.scatterplot(data_set_df[0],data_set_df[1])
 plt.savefig('display.png') 
 
-def generator(placeholder,h_l_size=[16, 16],reuse=False):
+def generator(z_placeholder,h_l_size,reuse):
+    """
+    Args:
+        Placeholder for random sample Z.
+        Hidden_layers size in fully connected network 
+        reuse to reuse the same layers.
+        
+    """
     with tf.variable_scope("GAN/Generator",reuse=reuse):
-        h1 = tf.layers.dense(placeholder,h_l_size[0],activation=tf.nn.leaky_relu)
+        h1 = tf.layers.dense(z_placeholder,h_l_size[0],activation=tf.nn.leaky_relu)
         h2 = tf.layers.dense(h1,h_l_size[1],activation=tf.nn.leaky_relu)
         out_l = tf.layers.dense(h2,2)
 
     return out_l
+
+
+def discriminator(x_placeholder,h_l_size=[16,16],reuse=False):
+    """
+    Takes input placeholder for samples from the v_space of real dataset.{samples can be real or generated.}
+    
+    
+    
+    """
+    with tf.variable_scope("GAN/Discriminator",reuse=reuse):
+        h1=tf.layers.dense(x_placeholder,h_l_size[0],activation=tf.nn.leaky_relu)
+        h2=tf.layers.dense(h1,h_l_size[1],activation=tf.nn.leaky_relu) 
+        h3=tf.layers.dense(h2,2)        #O: Logit prediction for x
+        out_l=tf.layers.dense(h3,1)     #O: Feature transformation learned by x. 
+        
+    return out_l,h3
+        
+        
+# Adversarial Training 
+
+x_placeholder = tf.placeholder(tf.float32,[None,2]) #real samples 
+z_placeholder = tf.placeholder(tf.float32,[None,2]) #random noise samples 
+# print(x_placeholder)   #Tensor("Placeholder:0", shape=(?, 2), dtype=float32)
+genrated_data_out_l=generator(z_placeholder,h_l_size=[16, 16],reuse=False) #feeding random noise 
+disriminator_logits,
+
+
+   
