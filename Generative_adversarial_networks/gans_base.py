@@ -37,10 +37,10 @@ data_set_df=pd.DataFrame(data_set)
 sns.scatterplot(data_set_df[0],data_set_df[1])
 plt.savefig('display.png') 
 
-def generator(Z,hsize=[16, 16],reuse=False):
+def generator(placeholder,h_l_size=[16, 16],reuse=False):
     with tf.variable_scope("GAN/Generator",reuse=reuse):
-        h1 = tf.layers.dense(Z,hsize[0],activation=tf.nn.leaky_relu)
-        h2 = tf.layers.dense(h1,hsize[1],activation=tf.nn.leaky_relu)
-        out = tf.layers.dense(h2,2)
+        h1 = tf.layers.dense(placeholder,h_l_size[0],activation=tf.nn.leaky_relu)
+        h2 = tf.layers.dense(h1,h_l_size[1],activation=tf.nn.leaky_relu)
+        out_l = tf.layers.dense(h2,2)
 
-    return out
+    return out_l
