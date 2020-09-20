@@ -17,4 +17,3 @@ desired equilibrium is achieved.
 
 <!--https://blog.paperspace.com/implementing-gans-in-tensorflow/-->
 <!--https://kbroman.org/github_tutorial/pages/init.html-->
-###### unc!
